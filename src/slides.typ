@@ -71,6 +71,7 @@
     sentence-supplement: "Example",
 
     outline-title-text: "Outline",
+    outline-depth: 1,
 
     fontsize: 24pt,
     text-font: ("Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Libertinus Serif"),
@@ -168,15 +169,15 @@
 
             #heading(outlined: false, text(fill: blue.lighten(25%), [#outline-title-text]))
 
-            #context {
-                let elems = query(selector(heading).after(here()))
+            #show outline.entry: it => link(
+                it.element.location(),
+                it.indented(it.prefix(), it.body())
+            )
 
-                enum(..elems
-                    .filter(e => e.level == 1 and e.outlined)
-                    .map(e => {
-                        e.body
-                    }))
-            }
+            #outline(
+                depth: outline-depth,
+                title: "Agenda"
+            )
         ]
     }
 

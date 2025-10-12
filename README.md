@@ -328,6 +328,7 @@ _Note:_ The template generates a German statement of authorship as the last page
 | `show-date`            | optional, bool, default: `true`, show date in german format                                                                                                      |
 | `show-outline`         | optional, bool, default: `true`, show outline on the second slide                                                                                                |
 | `outline-depth`        | optional, number, default: `1`, maximum heading depth shown in the outline                                                                                       |
+| `heading-numbering`    | optional, none/str/function (see [here](https://typst.app/docs/reference/model/heading/#parameters-numbering)), default: `none`, how to number headings          |
 | `box-task-title`       | optional, content, default: `[Task]`, shown as the title of a slide's task box                                                                                   |
 | `box-hint-title`       | optional, content, default: `[Hint]`, shown as the title of a slide's tasks colored                                                                              |
 | `box-solution-title`   | optional, content, default: `[Solution]`, shown as the title of a slide's tasks colored                                                                          |
@@ -351,12 +352,6 @@ _Note:_ The template generates a German statement of authorship as the last page
 | `body`        | content, document content |
 
 - `slide`, `later`, `only`, `uncover`: imported from polylux
-
-If numbering in the outline is wanted, but the numbers should not be visible on the slides themselves, something like the following can be used:
-```typ
-#set heading(numbering: "1 a") // Define automatic numbering for headings
-#show heading: it => text(it.body) // Only show the headings body (text) on the slides
-```
 
 ## Subtypes
 

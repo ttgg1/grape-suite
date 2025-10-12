@@ -186,7 +186,7 @@
         if heading-numbering == none {
             (..nums) => {
                 let number = numbering("1. a", ..nums)
-                if number.len() == 1 {number + "."} else {number}
+                if not number.contains(".") {number + "."} else {number}
             }
         }
         else { heading-numbering }

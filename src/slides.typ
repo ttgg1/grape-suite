@@ -72,6 +72,7 @@
 
     outline-title-text: "Outline",
     outline-depth: 1,
+    heading-numbering: none,
 
     fontsize: 24pt,
     text-font: ("Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Libertinus Serif"),
@@ -176,10 +177,21 @@
 
             #outline(
                 depth: outline-depth,
-                title: "Agenda"
+                title: none
             )
         ]
     }
+
+    set heading(numbering:
+        if heading-numbering == none {
+            (..nums) => {
+                let number = numbering("1. a", ..nums)
+                if number.len() == 1 {number + "."} else {number}
+            }
+        }
+        else { heading-numbering }
+    )
+    show heading: it => if heading-numbering == none {text(it.body)} else {it}
 
     if show-todolist {
         context {

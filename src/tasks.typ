@@ -403,6 +403,7 @@
     let task-translation-state = state("grape-suite-task-translations", (task-type: [Task], extra-task-type: [Extra task]))
     let task-type = task-translation-state.final().task-type
     let extra-task-type = task-translation-state.final().extra-task-type
+    let only-show-solutions = task-translation-state.final().only-show-solutions
 
     let numbering-format = numbering-format
     if numbering-format == none {
@@ -423,7 +424,8 @@
         extra: extra,
         ignore-points: ignore-points,
         extra-task-type: if type != none {type} else {extra-task-type},
-        task-type: if type != none {type} else {task-type}
+        task-type: if type != none {type} else {task-type},
+        only-show-solutions: only-show-solutions
     )
 
     if t.body == [] or t.body == [ ] {
@@ -438,26 +440,28 @@
     state("grape-suite-subtask-indent").update((0,))
 
     // let t = state("grape-suite-tasks", ()).final().last()
-    make-task(no,
-        title,
-        instruction,
-        t.body,
-        t.extra,
-        context {
-            let points = t.points
+    if t.only-show-solutions == false {
+      make-task(no,
+          title,
+          instruction,
+          t.body,
+          t.extra,
+          context {
+              let points = t.points
 
-            if points == 0 {
-                let s = state("grape-suite-tasks", ())
-                points = s.final().at(s.get().len()-1).points
-            }
+              if points == 0 {
+                  let s = state("grape-suite-tasks", ())
+                  points = s.final().at(s.get().len()-1).points
+              }
 
-            if points != 0 {
-                [#points P.]
-            }
-        },
-        lines,
-        if type != none {type} else {extra-task-type},
-        if type != none {type} else {task-type})
+              if points != 0 {
+                  [#points P.]
+              }
+          },
+          lines,
+          if type != none {type} else {extra-task-type},
+          if type != none {type} else {task-type})
+    }
 }
 
 #let subtask(points: 0,

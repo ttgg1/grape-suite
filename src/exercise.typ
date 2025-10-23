@@ -36,6 +36,9 @@
 
     show-hints: false,
     show-solutions: false,
+    
+    // only show tasks with solutions
+    only-show-solutions: false,
 
     // show name and time in header of first page
     show-namefield: false,
@@ -277,7 +280,8 @@
 
     state("grape-suite-task-translations").update((
         "task-type": task-type,
-        "extra-task-type": extra-task-type
+        "extra-task-type": extra-task-type,
+        "only-show-solutions": only-show-solutions
     ))
 
     state("grape-suite-box-translations").update((
@@ -292,7 +296,7 @@
     state("grape-suite-element-sentence-supplement").update(sentence-supplement)
     show: sentence-logic
 
-    if title != none {
+    if title != none and only-show-solutions == false{
         big-heading(title)
     }
 
@@ -331,7 +335,7 @@
     context {
         let tasks = state("grape-suite-tasks", ()).at(here())
 
-        if show-hints and tasks.filter(e => e.hint != none).len() != 0 {
+        if show-hints and tasks.filter(e => e.hint != none).len() != 0 and only-show-solutions == false{
             pagebreak()
             big-heading[#hints-title #if type != none or no != none [ -- ] #type #no]
             make-hints(here(), hint-type)
@@ -342,7 +346,9 @@
         set page(flipped: true, columns: 2, margin: (x: 1cm, top: 3cm, bottom: 2cm))
         it
     } else if show-solutions {
-        pagebreak()
+        if only-show-solutions == false{
+           pagebreak()
+        }
         it
     }
 
